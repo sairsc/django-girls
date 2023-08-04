@@ -1,2 +1,4 @@
 Django
 python-dotenv
+django-crispy-forms
+requests

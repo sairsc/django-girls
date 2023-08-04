@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.pythonanywhere.com']
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ".pythonanywhere.com"]
 
 
 # Application definition
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "blog",
+    "feedback",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -59,7 +61,7 @@ ROOT_URLCONF = "django_girls_project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -129,3 +131,6 @@ STATIC_ROOT = BASE_DIR / "static"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 APP_NAME = os.getenv("APP_NAME")
+ELASTIC_EMAIL_API_KEY = os.getenv("ELASTIC_EMAIL_API_KEY")
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+EMAIL_BACKEND = "feedback.custom_email_backend.CustomEmailBackend"
