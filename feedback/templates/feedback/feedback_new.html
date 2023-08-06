@@ -4,8 +4,7 @@
 
 {% block content %}
     <h2>New feedback</h2>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form|crispy }}<br>
-        <button type="submit" class="save btn btn-secondary">Save</button>
+    <form method="POST" class="post-form">
+        {% crispy form %}<br>
     </form>
 {% endblock %}
