@@ -1,7 +1,7 @@
 from django import forms
 from .models import Feedback
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Row, Column, Div, HTML
+from crispy_forms.layout import Layout, Row, Column, Div, HTML
 
 
 class FeedbackForm(forms.ModelForm):
