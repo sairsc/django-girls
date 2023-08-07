@@ -1,6 +1,7 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+{% if user.is_authenticated %}
 <div class="modal fade" id="post_delete_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -18,13 +19,16 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% for post in posts %}
 <article class="post" id="{{ post.pk }}">
+    {% if user.is_authenticated %}
     <button value="{{ post.pk }}" type="button" class="save btn btn-secondary delete_post_link">
         <span class="material-symbols-outlined">
             delete
         </span>
     </button>
+    {% endif %}
     <time class="date">
         {{ post.published_date }}
     </time>
