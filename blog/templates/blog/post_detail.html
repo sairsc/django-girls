@@ -1,20 +1,50 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <article class="post">
-        <aside class="actions">
-            {% if user.is_authenticated %}
-                <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
-                    {% include './icons/pencil-fill.svg' %}
-                </a>
-            {% endif %}
-        </aside>
-        {% if post.published_date %}
-            <time class="date">
-                {{ post.published_date }}
-            </time>
+<div class="modal fade" id="post_edit_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit {{ post.title }}</h5>
+            </div>
+            <div class="modal-body">
+                <h4 id="modal_title_h4"></h4>
+                <form id="edit_post_modal_form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" name="title" class="form-control" id="edit_post_modal_title"
+                            placeholder="Enter title" value="{{ post.title }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Text</label>
+                        <textarea class="form-control" name="text" id="edit_post_modal_text" placeholder="Exter text"
+                            rows="5">{{ post.text }}</textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Discard</button>
+                <button id="submit_edit_post" type="button" class="btn btn-secondary">Save</button>
+                <input type="hidden" id="edit_id" name="edit_id" value="{{ post.pk }}">
+            </div>
+        </div>
+    </div>
+</div>
+<article class="post">
+    <aside class="actions">
+        {% if user.is_authenticated %}
+        <a id="edit_post_link" class="btn btn-secondary">
+            {% include './icons/pencil-fill.svg' %}
+        </a>
         {% endif %}
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.text|linebreaksbr }}</p>
-    </article>
+    </aside>
+    {% if post.published_date %}
+    <time class="date" id="post_date">
+        {{ post.published_date }}
+    </time>
+    {% endif %}
+    <h2 id="post_title">{{ post.title }}</h2>
+    <textarea class="form-control" id="post_text" rows="10" disabled>{{ post.text }}</textarea>
+</article>
 {% endblock %}

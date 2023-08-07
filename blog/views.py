@@ -4,6 +4,7 @@ from django.utils import timezone
 from .forms import PostForm
 from django.shortcuts import redirect
 from django.conf import settings
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -46,11 +47,15 @@ def post_edit(request, pk):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
             post.save()
-            return redirect("post_detail", pk=post.pk)
-    else:
-        form = PostForm(instance=post)
-    return render(
-        request, "blog/post_edit.html", {"form": form, "app_name": settings.APP_NAME}
-    )
+            return JsonResponse({"success": "success", "title": post.title, "text": post.text})
+    return JsonResponse({"error": form.errors})
+
+
+def post_delete(request, pk):
+    if request.user.is_authenticated:
+        post = get_object_or_404(Post, pk=pk)
+        if post:
+            post.delete()
+            return JsonResponse({"success": "success"})
+    return JsonResponse({"error": "error"})
